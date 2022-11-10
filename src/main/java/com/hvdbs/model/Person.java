@@ -1,14 +1,15 @@
 package com.hvdbs.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "person")
 public class Person {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name")
@@ -17,12 +18,21 @@ public class Person {
     @Column(name = "age")
     private int age;
 
+    @OneToMany(mappedBy = "person")
+    private List<Item> items = new ArrayList<>();
 
     public Person() {
     }
 
-    public Person(int id, String name, int age) {
-        this.id = id;
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public Person(String name, int age) {
         this.name = name;
         this.age = age;
     }
@@ -49,5 +59,14 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }
