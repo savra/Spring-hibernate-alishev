@@ -1,12 +1,10 @@
 package com.hvdbs;
 
-import com.hvdbs.model.Item;
-import com.hvdbs.model.Person;
+import com.hvdbs.model.Actor;
+import com.hvdbs.model.Movie;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-
-import java.util.List;
 
 /**
  * Hello world!
@@ -15,8 +13,8 @@ import java.util.List;
 public class App 
 {
     public static void main( String[] args ) {
-        Configuration configuration = new Configuration().addAnnotatedClass(Person.class)
-                .addAnnotatedClass(Item.class);
+        Configuration configuration = new Configuration().addAnnotatedClass(Movie.class)
+                .addAnnotatedClass(Actor.class);
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
 
@@ -24,10 +22,8 @@ public class App
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            Person person = session.get(Person.class, 12);
-            Item item = session.get(Item.class, 2);
-
-            item.setPerson(person);
+            Movie movie = session.get(Movie.class, 3);
+            System.out.println(movie.getActors());
 
             session.getTransaction().commit();
         }
